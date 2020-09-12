@@ -1,7 +1,18 @@
 #!/bin/bash
 
 echo "Dumping the production database"
-pg_dump $PRODUCTION_DATABASE_URL -f dump.out --format c --clean -T public.spatial_ref_sys
+pg_dump \
+    -d $PRODUCTION_DATABASE_URL \
+    --verbose \
+    --clean \
+    --file dump.out \
+    --format c
 
 echo "Restoring the staging database"
-pg_restore -d $STAGING_DATABASE_URL dump.out --clean --no-acl --no-owner
+pg_restore \
+    -d $STAGING_DATABASE_URL \
+    --verbose \
+    --clean \
+    --no-acl \
+    --no-owner \
+    dump.out
